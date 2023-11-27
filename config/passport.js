@@ -7,15 +7,20 @@
 const passport = require("passport");
 //constructor function: 建立策略
 const GoogleStrategy = require("passport-google-oauth20");
+//local strategy :本地策略
+const LocalStrategy = require("passport-local");
 
 //引進 models
 const Member = require("../models/memberModel");
+
+//bcrypt 引進
+const bcrypt = require("bcrypt");
 
 //strategy 裡的 done 執行時自動執行 serializeUser()
 passport.serializeUser((user, done) => {
   console.log("進入serializeUser");
   //這裏的done跟strategy裡的done沒有關聯
-  console.log(user); //這裏的user代表存在mongoDB裡的資料
+  //console.log(user); //這裏的user代表存在mongoDB裡的資料
   console.log("執行serializeUser內部的done");
   done(null, user._id); //將mongoDB的id，存在session=>簽名後以cookie給使用者
   //這裏的done執行時 也會帶入兩個功能：
@@ -84,4 +89,24 @@ passport.use(
       }
     }
   )
+);
+
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    //passport會自動套入 ejs裡的 username / password 所以 name 屬性不能改
+    console.log("comes to local strartegy");
+    console.log(username);
+    let findMember = await Member.findOne({ email: username }).exec();
+    console.log(findMember);
+    if (findMember) {
+      let result = await bcrypt.compare(password, findMember.password);
+      if (result) {
+        done(null, findMember); //findMember => serializeUser() / deserializeUser()
+      } else {
+        done(null, false);
+      }
+    } else {
+      done(null, false);
+    }
+  })
 );

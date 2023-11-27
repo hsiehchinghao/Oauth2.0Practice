@@ -6,6 +6,7 @@
   </head>
   <body>
     <%- include ("partials/nav") %>
+    <% if (error_msg == "") { %>
     <main style="padding: 3rem">
       <div class="row">
         <div ass="col-md-12">
@@ -26,7 +27,8 @@
       </div>
       <hr />
       <h5>已經註冊過一個帳戶？您可以在此登錄：</h5>
-      <form action="/auth/login" method="POST"></form>
+      <form action="/auth/login" method="POST">
+      <%- include ("partials/message") %>
         <div class="form-group">
           <label for="exampleInputEmail1">信箱地址：</label>
           <input
@@ -51,8 +53,9 @@
           />
         </div>
         <br />
-        <button class="btn btn-primary">會員登入</button>
+        <button class="btn btn-primary" type="submit">會員登入</button>
       </form>
     </main>
+    <% } %>
   </body>
 </html>

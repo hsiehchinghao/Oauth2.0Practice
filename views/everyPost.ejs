@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <%- include ("partials/header") %>
+</head>
+<body>
+    <%- include ("partials/nav") %>
+    <section class="post-section" style="display: flex; justify-content: center; flex-direction: column; width:500px;">
+    <%for (let i = 0; i < post.length; i++){ %>
+        <div class="post-card" style="display: inline-block; margin-bottom: 40px; text-align: center;">
+            <div class="title" style="font-size: 30px;"><%= post[i].title %></div>
+            <div class="content"><%= post[i].content %></div>
+            <div class="date"><%= post[i].date %></div>
+        </div>            
+    <% } %>
+</section>
+</body>
+</html>

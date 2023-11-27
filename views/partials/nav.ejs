@@ -1,6 +1,6 @@
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Google與本地登入系統</a>
+    <a class="navbar-brand" href="#">登入po文系統</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -15,6 +15,9 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="/">首頁</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="/post-section">查看文章區</a>
+        </li>
         <% if (!user){ %>
         <li class="nav-item">
           <a class="nav-link" href="/auth/login">會員登入</a>
