@@ -9,8 +9,16 @@ const authCheck = (req, res, next) => {
   }
 };
 
-router.get("/", authCheck, async (req, res) => {
-  console.log("進入 profile 的 route");
+router.use((req, res, next) => {
+  if (req.isAuthenticated()) {
+    console.log("成功使用中間件");
+    next();
+  } else {
+    return res.redirect("/auth/login");
+  }
+});
+
+router.get("/", async (req, res) => {
   console.log(req.user);
   let findPost = await Post.find({ author: req.user._id });
   console.log(findPost);

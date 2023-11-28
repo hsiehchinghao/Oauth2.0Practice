@@ -3,7 +3,7 @@
     這裡放有關strategy的內容:
         包含 本地登入策略 或 google strategy 等等
 */
-
+console.log("啟動passport");
 const passport = require("passport");
 //constructor function: 建立策略
 const GoogleStrategy = require("passport-google-oauth20");
@@ -34,7 +34,14 @@ passport.deserializeUser(async (id, done) => {
   //req.user / isAuthenticatd
   console.log("進入deserializeUser");
   let findMember = await Member.findOne({ _id: id });
-  console.log("執行deserializeUser內的done");
+  // .then((result) => {
+  //   console.log(result);
+  //   done(null, result);
+  // })
+  // .catch((e) => {
+  //   console.log(e);
+  // });
+  // console.log("執行deserializeUser內的done");
   done(null, findMember);
   console.log("結束deserializeUser()");
   //console.log(req.user);這裏沒有req.user
@@ -101,7 +108,9 @@ passport.use(
     if (findMember) {
       let result = await bcrypt.compare(password, findMember.password);
       if (result) {
+        console.log("執行strategy done");
         done(null, findMember); //findMember => serializeUser() / deserializeUser()
+        console.log("執行完strategy done");
       } else {
         done(null, false);
       }
